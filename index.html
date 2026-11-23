@@ -29,12 +29,13 @@
         .brand-group, .sim-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
         .back-voltai-btn { background: rgba(59,130,246,0.14); border: 1px solid rgba(59,130,246,0.45); color: #60a5fa; height: 32px; padding: 0 9px; border-radius: 8px; font-size: 0.74rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; text-decoration: none; transition: 0.15s; }
         .back-voltai-btn:hover { background: rgba(59,130,246,0.28); color: #fff; }
-        .t-btn { background: #19202c; border: 1px solid #2d3748; color: var(--text-main); height: 32px; padding: 0 8px; border-radius: 8px; font-size: 0.74rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+        .t-btn { background: #19202c; border: 1px solid #2d3748; color: var(--text-main); height: 32px; padding: 0 8px; border-radius: 8px; font-size: 0.74rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; transition: 0.15s; }
         .t-btn:hover { border-color: var(--accent-blue); }
         .t-btn.run-active { background: var(--accent); color: #042f2e; border-color: var(--accent); }
         .t-btn.lock-active { background: #f59e0b; color: #1c1917; border-color: #f59e0b; }
         .t-btn.sound-on { border-color: #10b981; color: #34d399; }
         .t-btn.ai-magic { background: linear-gradient(135deg, #2563eb, #7c3aed); border: none; color: #fff; box-shadow: 0 0 14px rgba(124,58,237,0.4); }
+        .t-btn.auto-wire-btn { background: linear-gradient(135deg, #059669, #0284c7); border: none; color: #fff; }
 
         /* Main Body & Sidebar */
         .studio-body { flex: 1; display: flex; position: relative; overflow: hidden; }
@@ -118,7 +119,8 @@
         .push-actuator.is-pressed { transform: scale(0.86); filter: brightness(1.25); }
         .toggle-pill { background: linear-gradient(180deg, #272b33, #14171d); border: 1px solid #4b5563; color: #38bdf8; font-size: 0.62rem; font-weight: 800; padding: 3px 8px; border-radius: 5px; cursor: pointer; margin-top: 2px; direction: ltr; }
         @keyframes spinRotor { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .rotor-spinning { transform-origin: 44px 36px; animation: spinRotor 0.5s linear infinite; }
+        .rotor-spinning { transform-origin: 44px 38px; animation: spinRotor 0.5s linear infinite; }
+        .rotor-spinning-rev { transform-origin: 44px 38px; animation: spinRotor 0.5s linear infinite reverse; }
 
         /* Floating Overlays */
         .floating-wire-bar { position: absolute; top: 8px; left: 8px; background: rgba(18,22,32,0.95); border: 1px solid var(--panel-border); padding: 5px 8px; border-radius: 10px; display: flex; align-items: center; gap: 5px; z-index: 70; flex-wrap: wrap; max-width: calc(100% - 16px); }
@@ -135,7 +137,7 @@
         .prop-bar.open { display: flex; flex-wrap: wrap; }
 
         .fault-toast { position: absolute; top: 48px; left: 8px; max-width: 370px; background: rgba(127,29,29,0.96); border: 1px solid #ef4444; color: #fecaca; padding: 9px 13px; border-radius: 10px; font-size: 0.77rem; line-height: 1.5; z-index: 90; display: none; }
-        .bottom-dock { position: absolute; bottom: 46px; left: 10px; right: 10px; max-width: 820px; height: 300px; background: rgba(18,22,32,0.98); border: 1px solid var(--panel-border); border-radius: 14px; z-index: 85; display: none; flex-direction: column; box-shadow: 0 -10px 30px rgba(0,0,0,0.75); overflow: hidden; }
+        .bottom-dock { position: absolute; bottom: 46px; left: 10px; right: 10px; max-width: 820px; height: 310px; background: rgba(18,22,32,0.98); border: 1px solid var(--panel-border); border-radius: 14px; z-index: 85; display: none; flex-direction: column; box-shadow: 0 -10px 30px rgba(0,0,0,0.75); overflow: hidden; }
         .bottom-dock.open { display: flex; }
         .dock-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: #171c26; border-bottom: 1px solid var(--panel-border); font-size: 0.8rem; font-weight: 800; }
         .dock-content { flex: 1; padding: 11px; overflow-y: auto; font-size: 0.8rem; }
@@ -153,6 +155,20 @@
         .bom-table th { background: #171c26; color: #38bdf8; }
         .ai-msg-box { background: #0b0e14; border: 1px solid #263042; border-radius: 8px; padding: 9px 11px; margin-top: 8px; line-height: 1.65; font-size: 0.78rem; }
         .challenge-card { background: #0b0e14; border: 1px solid #2d3748; border-radius: 9px; padding: 9px 11px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+
+        /* In-App Print Modal (Feature 5) */
+        .print-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: none; align-items: center; justify-content: center; padding: 15px; }
+        .print-modal.open { display: flex; }
+        .print-sheet { background: #fff; color: #0f172a; width: 100%; max-width: 720px; max-height: 88vh; overflow-y: auto; border-radius: 12px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .print-sheet table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 0.82rem; }
+        .print-sheet th, .print-sheet td { border: 1px solid #cbd5e1; padding: 7px 10px; text-align: right; }
+        .print-sheet th { background: #f1f5f9; }
+        @media print {
+            body > *:not(.print-modal) { display: none !important; }
+            .print-modal { position: static; background: #fff; padding: 0; }
+            .print-sheet { box-shadow: none; max-height: none; }
+            .no-print { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -177,6 +193,10 @@
             <button class="t-btn" onclick="stopSimulation()">
                 <svg class="svg-ic" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>
                 <span>إيقاف</span>
+            </button>
+            <button class="t-btn auto-wire-btn" onclick="smartAutoWireBoard()" title="توصيل الأسلاك تلقائياً للعناصر الموجودة">
+                <svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+                <span>توصيل تلقائي</span>
             </button>
             <button class="t-btn sound-on" id="btnSoundToggle" onclick="toggleSound()" title="صوت المعدات">
                 <svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -281,11 +301,20 @@
         </main>
     </div>
 
+    <!-- In-App Engineering Report Modal -->
+    <div class="print-modal" id="printModal" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="print-sheet" id="printSheetContent"></div>
+    </div>
+
     <footer class="bottom-bar">
         <div style="display:flex;gap:5px;">
             <button class="dock-trigger" id="trig-ai" onclick="openDock('ai')">
                 <svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
                 <span>الذكاء الاصطناعي</span>
+            </button>
+            <button class="dock-trigger" id="trig-scope" onclick="openDock('scope')">
+                <svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span>راسم الإشارة</span>
             </button>
             <button class="dock-trigger" id="trig-challenges" onclick="openDock('challenges')">
                 <svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
@@ -308,7 +337,7 @@
                 <span>الكميات و PDF</span>
             </button>
         </div>
-        <div id="simStatusText" style="font-size:0.72rem;color:#9ca3af;white-space:nowrap;">83 عنصر + ATS + أصوات + تشخيص ذكي</div>
+        <div id="simStatusText" style="font-size:0.72rem;color:#9ca3af;white-space:nowrap;">83 عنصر + توصيل تلقائي + راسم إشارة</div>
     </footer>
     <script>
         /* =========================================================
@@ -316,6 +345,7 @@
            ========================================================= */
         let soundEnabled = true;
         let audioCtx = null;
+        let buzzerTick = 0;
 
         function toggleSound() {
             soundEnabled = !soundEnabled;
@@ -336,7 +366,6 @@
                 gain.connect(audioCtx.destination);
 
                 if (type === 'clack') {
-                    // صوت طگة الكونتاكتور والريليه
                     osc.type = 'triangle';
                     osc.frequency.setValueAtTime(160, now);
                     osc.frequency.exponentialRampToValueAtTime(42, now + 0.06);
@@ -344,7 +373,6 @@
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
                     osc.start(now); osc.stop(now + 0.07);
                 } else if (type === 'trip') {
-                    // صوت قفزة القاطع وشورت
                     osc.type = 'sawtooth';
                     osc.frequency.setValueAtTime(220, now);
                     osc.frequency.exponentialRampToValueAtTime(35, now + 0.18);
@@ -352,18 +380,17 @@
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.19);
                     osc.start(now); osc.stop(now + 0.19);
                 } else if (type === 'buzzer') {
-                    // صوت الطنان / صافرة الإنذار
                     osc.type = 'square';
                     osc.frequency.setValueAtTime(880, now);
-                    gain.gain.setValueAtTime(0.08, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
-                    osc.start(now); osc.stop(now + 0.16);
+                    gain.gain.setValueAtTime(0.07, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                    osc.start(now); osc.stop(now + 0.22);
                 }
             } catch (e) {}
         }
 
         /* =========================================================
-           1. REALISTIC SVG HARDWARE RENDERERS (1:1 EXACT SCREW WELLS)
+           1. REALISTIC SVG HARDWARE RENDERERS
            ========================================================= */
         function renderSimurelayPLC(n, titleText) {
             const q0 = n && n.q0;
@@ -516,7 +543,7 @@
                     { type: 'PHASE_RELAY', label: 'مرحل مراقبة الأطوار', ports: [{ id: 'L1', x: 20, y: 11 }, { id: 'L2', x: 39, y: 11 }, { id: 'L3', x: 58, y: 11 }, { id: '15', x: 26, y: 50 }, { id: '18', x: 52, y: 50 }], render: () => `<div class="hw-wrap ltr-isolate"><svg width="78" height="62" viewBox="0 0 78 62"><rect x="6" y="4" width="66" height="54" rx="4" fill="#252932" stroke="#eab308" stroke-width="1.8"/><text x="39" y="34" fill="#facc15" font-size="8" font-weight="bold" text-anchor="middle">3φ SEQ</text></svg></div>` },
                     { type: 'PTC_RELAY', label: 'مرحل ثرمستور PTC', ports: [{ id: 'A1', x: 20, y: 11 }, { id: 'T1', x: 39, y: 11 }, { id: 'T2', x: 58, y: 11 }, { id: 'A2', x: 26, y: 50 }, { id: '14', x: 52, y: 50 }], render: () => `<div class="hw-wrap ltr-isolate"><svg width="78" height="62" viewBox="0 0 78 62"><rect x="6" y="4" width="66" height="54" rx="4" fill="#252932" stroke="#38bdf8"/><text x="39" y="34" fill="#38bdf8" font-size="8.5" font-weight="bold" text-anchor="middle">PTC °C</text></svg></div>` },
                     { type: 'SAFETY_RELAY', label: 'مرحل أمان (إيقاف طوارئ، قناتان)', ports: [{ id: 'A1', x: 20, y: 11 }, { id: 'S11', x: 39, y: 11 }, { id: 'S21', x: 58, y: 11 }, { id: 'A2', x: 26, y: 50 }, { id: '14', x: 52, y: 50 }], render: () => `<div class="hw-wrap ltr-isolate"><svg width="78" height="62" viewBox="0 0 78 62"><rect x="6" y="4" width="66" height="54" rx="4" fill="#eab308" stroke="#fef08a" stroke-width="1.8"/><rect x="16" y="20" width="46" height="22" rx="2" fill="#0f172a"/><text x="39" y="34" fill="#facc15" font-size="7.5" font-weight="bold" text-anchor="middle">SAFETY</text></svg></div>` },
-                    { type: 'OVERLOAD', label: 'مرحل حراري (Thermal Overload)', ports: [{ id: '95', x: 26, y: 11 }, { id: '96', x: 52, y: 11 }, { id: 'T1', x: 20, y: 50 }, { id: 'T2', x: 39, y: 50 }, { id: 'T3', x: 58, y: 50 }], render: () => `<div class="hw-wrap ltr-isolate"><svg width="78" height="62" viewBox="0 0 78 62"><rect x="6" y="4" width="66" height="54" rx="4" fill="#252932" stroke="#f97316" stroke-width="1.8"/><text x="39" y="34" fill="#fb923c" font-size="8" font-weight="bold" text-anchor="middle">OLR 95-96</text></svg></div>` }
+                    { type: 'OVERLOAD', label: 'مرحل حراري (Thermal Overload)', ports: [{ id: '95', x: 26, y: 11 }, { id: '96', x: 52, y: 11 }, { id: 'T1', x: 20, y: 50 }, { id: 'T2', x: 39, y: 50 }, { id: 'T3', x: 58, y: 50 }], render: (n) => `<div class="hw-wrap ltr-isolate" onclick="if(isRunning){toggleSwitchState('${n.id}');}" title="انقر أثناء التشغيل لاختبار فصل الحرارة"><svg width="78" height="62" viewBox="0 0 78 62"><rect x="6" y="4" width="66" height="54" rx="4" fill="#252932" stroke="${n && n.swState ? '#ef4444' : '#f97316'}" stroke-width="2"/><text x="39" y="34" fill="${n && n.swState ? '#ef4444' : '#fb923c'}" font-size="8" font-weight="bold" text-anchor="middle">${n && n.swState ? 'TRIPPED!' : 'OLR 95-96'}</text></svg></div>` }
                 ]
             },
             {
@@ -540,7 +567,7 @@
                 name: 'المشغلات وأجهزة القيادة',
                 color: '#f59e0b',
                 items: [
-                    { type: 'MOTOR_SD', label: 'محرك 3~ نجمة/دلتا (6 أطراف)', ports: [{ id: 'U1', x: 26, y: 8 }, { id: 'V1', x: 44, y: 8 }, { id: 'W1', x: 62, y: 8 }, { id: 'W2', x: 26, y: 66 }, { id: 'U2', x: 44, y: 66 }, { id: 'V2', x: 62, y: 66 }], render: (n) => `<div class="hw-wrap ltr-isolate"><svg width="88" height="72" viewBox="0 0 88 72" style="direction:ltr;"><rect x="20" y="3" width="48" height="12" rx="2" fill="#475569" stroke="#94a3b8"/><circle cx="44" cy="38" r="23" fill="#252932" stroke="${n && n.running ? '#10b981' : '#94a3b8'}" stroke-width="2.2"/><circle cx="44" cy="38" r="17" fill="#14171d" stroke="#64748b" stroke-dasharray="3 2"/><g class="${n && n.running ? 'rotor-spinning' : ''}"><line x1="44" y1="22" x2="44" y2="54" stroke="#38bdf8" stroke-width="2.2"/><line x1="28" y1="38" x2="60" y2="38" stroke="#38bdf8" stroke-width="2.2"/></g><circle cx="44" cy="38" r="10" fill="#0f172a"/><text x="44" y="40.5" fill="#fff" font-size="6.8" font-weight="bold" text-anchor="middle">${(n && n.sdMode) || '3~ MOT'}</text></svg></div>` },
+                    { type: 'MOTOR_SD', label: 'محرك 3~ نجمة/دلتا (6 أطراف)', ports: [{ id: 'U1', x: 26, y: 8 }, { id: 'V1', x: 44, y: 8 }, { id: 'W1', x: 62, y: 8 }, { id: 'W2', x: 26, y: 66 }, { id: 'U2', x: 44, y: 66 }, { id: 'V2', x: 62, y: 66 }], render: (n) => `<div class="hw-wrap ltr-isolate"><svg width="88" height="72" viewBox="0 0 88 72" style="direction:ltr;"><rect x="20" y="3" width="48" height="12" rx="2" fill="#475569" stroke="#94a3b8"/><circle cx="44" cy="38" r="23" fill="#252932" stroke="${n && n.running ? '#10b981' : '#94a3b8'}" stroke-width="2.2"/><circle cx="44" cy="38" r="17" fill="#14171d" stroke="#64748b" stroke-dasharray="3 2"/><g class="${n && n.running ? (n.sdMode === 'REV' ? 'rotor-spinning-rev' : 'rotor-spinning') : ''}"><line x1="44" y1="22" x2="44" y2="54" stroke="#38bdf8" stroke-width="2.2"/><line x1="28" y1="38" x2="60" y2="38" stroke="#38bdf8" stroke-width="2.2"/></g><circle cx="44" cy="38" r="10" fill="#0f172a"/><text x="44" y="40.5" fill="#fff" font-size="6.8" font-weight="bold" text-anchor="middle">${(n && n.sdMode) || '3~ MOT'}</text></svg></div>` },
                     { type: 'MOTOR_PTC', label: 'محرك 3~ نجمة/دلتا مع PTC', ports: [{ id: 'U1', x: 20, y: 8 }, { id: 'V1', x: 36, y: 8 }, { id: 'W1', x: 52, y: 8 }, { id: 'PTC', x: 68, y: 8 }, { id: 'W2', x: 26, y: 66 }, { id: 'U2', x: 44, y: 66 }, { id: 'V2', x: 62, y: 66 }], render: (n) => `<div class="hw-wrap ltr-isolate"><svg width="88" height="72" viewBox="0 0 88 72"><rect x="14" y="3" width="60" height="12" rx="2" fill="#0284c7"/><circle cx="44" cy="38" r="23" fill="#252932" stroke="${n && n.running ? '#10b981' : '#38bdf8'}" stroke-width="2.2"/><text x="44" y="41" fill="#fff" font-size="7.5" font-weight="bold" text-anchor="middle">M+PTC</text></svg></div>` },
                     { type: 'MOTOR_DC24', label: 'محرك تيار مستمر 24V', ports: [{ id: '+', x: 26, y: 10 }, { id: '-', x: 48, y: 10 }], render: (n) => `<div class="hw-wrap ltr-isolate"><svg width="74" height="62" viewBox="0 0 74 62"><circle cx="37" cy="34" r="21" fill="#252932" stroke="${n && n.running ? '#22c55e' : '#94a3b8'}" stroke-width="2"/><text x="37" y="37" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">DC 24V</text></svg></div>` },
                     { type: 'TOWER_2', label: 'إشارة ضوئية أحمر/أخضر', ports: [{ id: 'R', x: 16, y: 54 }, { id: 'G', x: 28, y: 54 }, { id: 'N', x: 40, y: 54 }], render: () => `<div class="hw-wrap ltr-isolate"><svg width="56" height="62" viewBox="0 0 56 62"><rect x="17" y="4" width="22" height="46" rx="4" fill="#14171d" stroke="#94a3b8"/><circle cx="28" cy="17" r="6" fill="#ef4444"/><circle cx="28" cy="35" r="6" fill="#22c55e"/></svg></div>` },
@@ -609,7 +636,7 @@
         /* =========================================================
            2. ENGINE STATE, AUTO-SAVE & MAGNETIC DIN-RAIL SNAP
            ========================================================= */
-        const STORAGE_KEY = 'voltai_studio_pro_v4';
+        const STORAGE_KEY = 'voltai_studio_pro_v5';
         const RAIL_CENTERS_Y = [98, 228, 358, 488];
         const DIN_MOUNT_PREFIXES = ['SUPPLY_', 'MCB_', 'MPCB', 'KM_', 'AUX_', 'RELAY_', 'TIMER_', 'STAIR_', 'IMPULSE_', 'PHASE_', 'PTC_', 'SAFETY_', 'OVERLOAD', 'PLC_'];
 
@@ -619,7 +646,8 @@
         let zoomScale = 1.0, panX = 0, panY = 0;
         let tankLevel = 49, outletOpen = true, sewageLevel = 58, activeSewagePumps = 0;
         let plcAutoLatch = false, activeChallengeGoal = null;
-        let arduinoCode = `#include <Servo.h>\nServo valveServo;\nconst int sensorPin = A0, relayPin = 7, servoPin = 9;\nvoid setup() { pinMode(relayPin, OUTPUT); valveServo.attach(servoPin); }\nvoid loop() {\n  int val = analogRead(sensorPin);\n  if (val < 40) { digitalWrite(relayPin, HIGH); valveServo.write(90); }\n  else if (val >= 85) { digitalWrite(relayPin, LOW); valveServo.write(0); }\n  delay(200);\n}`;
+        let arduinoCode = `#include <Servo.h>\nServo valveServo;\nconst int sensorPin = A0, relayPin = 7, servoPin = 9;\nvoid setup() { pinMode(relayPin, OUTPUT); valveServo.attach(servoPin); }\nvoid loop() {\n  int val = analogRead(sensorPin);\n  if (val < 85) { digitalWrite(relayPin, HIGH); valveServo.write(90); }\n  else { digitalWrite(relayPin, LOW); valveServo.write(0); }\n  delay(200);\n}`;
+        let scopeHistory = Array(40).fill(0);
 
         function saveToLocalStorage() {
             try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ nodes, wires, nodeSeq, tankLevel, sewageLevel })); } catch (e) {}
@@ -877,8 +905,52 @@
         function handleCanvasBgClick() { cancelWiring(); closePropBar(); }
 
         /* =========================================================
-           4. WIRING, FERRULES & LIVE SCREW / WIRE VOLTAGE PROBE
+           4. WIRING, SMART ORTHOGONAL ROUTING & AUTO-WIRE (Features 1 & 3)
            ========================================================= */
+        function smartAutoWireBoard() {
+            if (nodes.length < 2) { alert('أضف عنصرين على الأقل للوحة ليتم توصيلهما تلقائياً.'); return; }
+            saveHistory();
+            const sup = nodes.find(n => n.type === 'SUPPLY_3P');
+            const mcb = nodes.find(n => n.type === 'MCB_3P');
+            const kms = nodes.filter(n => n.type.startsWith('KM_'));
+            const mot = nodes.find(n => n.type.startsWith('MOTOR_'));
+            const s1 = nodes.find(n => n.type === 'BTN_START');
+            const s0 = nodes.find(n => n.type === 'BTN_STOP');
+
+            let wiredCount = 0;
+            const prevLen = wires.length;
+            if (sup && mcb) {
+                connectPorts(sup.id, 'L1', mcb.id, '1', '#ef4444');
+                connectPorts(sup.id, 'L2', mcb.id, '3', '#eab308');
+                connectPorts(sup.id, 'L3', mcb.id, '5', '#3b82f6');
+                connectPorts(sup.id, 'N', mcb.id, 'N1', '#38bdf8');
+            }
+            if (mcb && kms[0]) {
+                connectPorts(mcb.id, '2', kms[0].id, 'L1', '#ef4444');
+                connectPorts(mcb.id, '4', kms[0].id, 'L2', '#eab308');
+                connectPorts(mcb.id, '6', kms[0].id, 'L3', '#3b82f6');
+                connectPorts(mcb.id, 'N2', kms[0].id, 'A2', '#38bdf8');
+                if (s0 && s1) {
+                    connectPorts(mcb.id, '2', s0.id, '1', '#ef4444');
+                    connectPorts(s0.id, '2', s1.id, '3', '#ef4444');
+                    connectPorts(s1.id, '4', kms[0].id, 'A1', '#ef4444');
+                } else if (s1) {
+                    connectPorts(mcb.id, '2', s1.id, '3', '#ef4444');
+                    connectPorts(s1.id, '4', kms[0].id, 'A1', '#ef4444');
+                } else {
+                    connectPorts(mcb.id, '2', kms[0].id, 'A1', '#ef4444');
+                }
+            }
+            if (kms[0] && mot) {
+                connectPorts(kms[0].id, 'T1', mot.id, 'U1', '#ef4444');
+                connectPorts(kms[0].id, 'T2', mot.id, 'V1', '#eab308');
+                connectPorts(kms[0].id, 'T3', mot.id, 'W1', '#3b82f6');
+            }
+            wiredCount = wires.length - prevLen;
+            saveToLocalStorage();
+            showProbeReading(wiredCount > 0 ? `تم تمديد ${wiredCount} سلك تلقائياً بنجاح!` : 'العناصر الأساسية موصلة مسبقاً.');
+        }
+
         function getPinVoltageLabel(node, portId) {
             if (!isRunning) return `${node.tag} [${portId}]: الدائرة متوقفة (0V)`;
             if (['L1', 'L2', 'L3', '1', '3', '5', 'T1', 'T2', 'T3', 'U1', 'V1', 'W1'].includes(portId)) return `${node.tag} [${portId}]: 400V AC ~ (فاز قدرة)`;
@@ -901,7 +973,7 @@
         function showProbeReading(text) {
             const b = document.getElementById('probeBadge');
             if (!b) return;
-            b.innerHTML = `<span style="color:#10b981;">مسبار الفحص:</span> <span class="ltr-isolate">${text}</span>`;
+            b.innerHTML = `<span style="color:#10b981;">الحالة:</span> <span class="ltr-isolate">${text}</span>`;
             b.style.display = 'block';
         }
 
@@ -935,10 +1007,12 @@
             const svg = document.getElementById('wiresSvg');
             if (!svg) return;
             svg.innerHTML = '';
+            const colorOffsets = { '#ef4444': -6, '#eab308': -2, '#3b82f6': 2, '#38bdf8': 6, '#10b981': 10 };
             wires.forEach(w => {
                 const p1 = getPortXY(w.fromNode, w.fromPort), p2 = getPortXY(w.toNode, w.toPort);
                 if (!p1 || !p2) return;
-                const midY = Math.round((p1.y + p2.y) / 2);
+                const offset = colorOffsets[w.color] || 0;
+                const midY = Math.round((p1.y + p2.y) / 2) + offset;
                 const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                 path.setAttribute('d', `M ${p1.x} ${p1.y} L ${p1.x} ${midY} L ${p2.x} ${midY} L ${p2.x} ${p2.y}`);
                 path.setAttribute('stroke', w.color); path.setAttribute('stroke-width', '3.2');
@@ -995,12 +1069,12 @@
         window.addEventListener('pointercancel', releaseAnyPressedButton);
         window.addEventListener('blur', releaseAnyPressedButton);
 
-        function toggleSwitchState(id) { const n = nodes.find(x => x.id === id); if (!n) return; n.swState = !n.swState; playSoundEffect('clack'); if (isRunning) evaluateCircuitStep(); renderAllNodes(); saveToLocalStorage(); }
+        function toggleSwitchState(id) { const n = nodes.find(x => x.id === id); if (!n) return; n.swState = !n.swState; playSoundEffect(n.type === 'OVERLOAD' && n.swState ? 'trip' : 'clack'); if (isRunning) evaluateCircuitStep(); renderAllNodes(); saveToLocalStorage(); }
         function cycleSelector(id, max) { const n = nodes.find(x => x.id === id); if (!n) return; n.selPos = ((n.selPos || 0) + 1) % max; playSoundEffect('clack'); if (isRunning) evaluateCircuitStep(); renderAllNodes(); saveToLocalStorage(); }
         function setAnalogVal(id, v) { const n = nodes.find(x => x.id === id); if (!n) return; n.analogVal = parseInt(v, 10) || 0; tankLevel = n.analogVal; if (isRunning) evaluateCircuitStep(); saveToLocalStorage(); }
 
         /* =========================================================
-           5. SIMULATION ENGINE, VISUAL FAULTS & DIAGNOSTICS
+           5. SIMULATION ENGINE, REAL ARDUINO PARSER & OSCILLOSCOPE
            ========================================================= */
         function toggleSimulation() {
             if (isRunning) return;
@@ -1058,14 +1132,14 @@
 
             const startBtns = nodes.filter(n => n.type === 'BTN_START' || n.type === 'BTN_DUAL');
             const stopBtn = nodes.find(n => n.type === 'BTN_STOP'), eStop = nodes.find(n => n.type === 'E_STOP');
+            const olrTripped = nodes.some(n => n.type === 'OVERLOAD' && n.swState);
             const swOn = nodes.find(n => ['SW_0_1', 'FLOAT_SW', 'LIMIT_SW', 'PROX_PNP', 'THERMOSTAT'].includes(n.type));
             const gridNode = nodes.find(n => n.type === 'ATS_GRID'), genNode = nodes.find(n => n.type === 'ATS_GEN');
-            const isStopped = (stopBtn && stopBtn.pressed) || (eStop && eStop.swState);
+            const isStopped = (stopBtn && stopBtn.pressed) || (eStop && eStop.swState) || olrTripped;
             const triggerActive = startBtns.some(b => b.pressed) || (swOn && swOn.swState);
 
             const contactors = nodes.filter(n => n.type.startsWith('KM_') || n.type.startsWith('RELAY_2') || n.type.startsWith('RELAY_4'));
             
-            // منطق خاص إذا كان هناك منظومة ATS (وطنية + مولدة)
             if (gridNode && genNode && contactors.length >= 2) {
                 const gridAvailable = gridNode.swState !== false;
                 const genAvailable = genNode.swState === true;
@@ -1094,7 +1168,6 @@
                 });
             }
 
-            // تشغيل صوت الكونتاكتور عند تغير حالته
             if (nodes.some((n, i) => n.energized !== prevStates[i])) {
                 playSoundEffect('clack');
             }
@@ -1113,10 +1186,15 @@
                 nodes.filter(n => n.type.startsWith('RELAY_2')).forEach(r => { if (wires.some(w => (w.fromNode === plc.id && w.toNode === r.id) || (w.toNode === plc.id && w.fromNode === r.id))) r.energized = plc.q0; });
             });
 
+            // Feature 4: Real Arduino C++ Threshold Parser
             nodes.filter(n => ['ARDUINO_UNO', 'ARDUINO_MEGA', 'ESP32_BOARD'].includes(n.type)).forEach(ard => {
                 const s = nodes.find(x => ['TX_TEMP', 'TX_LEVEL_420', 'POT_CTRL'].includes(x.type));
                 const v = s ? s.analogVal : tankLevel;
-                ard.d7 = v < 85;
+                const matchLt = arduinoCode.match(/val\s*<\s*(-?\d+)/);
+                const matchGt = arduinoCode.match(/val\s*>\s*(-?\d+)/);
+                if (matchLt) ard.d7 = v < parseInt(matchLt[1], 10);
+                else if (matchGt) ard.d7 = v > parseInt(matchGt[1], 10);
+                else ard.d7 = v < 85;
                 nodes.filter(n => n.type === 'RELAY_5V').forEach(r => r.energized = ard.d7);
                 nodes.filter(n => n.type === 'SERVO_MOTOR').forEach(sv => sv.servoOn = ard.d7);
                 nodes.filter(n => n.type === 'LCD_I2C').forEach(l => l.lcdText = `Val:${v} ${ard.d7 ? 'ON' : 'OFF'}`);
@@ -1132,31 +1210,36 @@
             if (outletOpen && tankLevel > 5) tankLevel = Math.max(5, tankLevel - 0.6);
             activeSewagePumps = powerActive ? Math.min(4, Math.ceil(sewageLevel / 25)) : 0;
 
+            buzzerTick = (buzzerTick + 1) % 4;
             nodes.filter(n => ['LAMP_GREEN', 'BUZZER', 'LED_220'].includes(n.type)).forEach(l => {
                 l.energized = wires.some(w => w.fromNode === l.id || w.toNode === l.id) && powerActive;
-                if (l.type === 'BUZZER' && l.energized) playSoundEffect('buzzer');
+                if (l.type === 'BUZZER' && l.energized && buzzerTick === 0) playSoundEffect('buzzer');
             });
-            nodes.filter(n => n.type === 'LAMP_RED').forEach(l => l.energized = wires.some(w => w.fromNode === l.id || w.toNode === l.id) && !powerActive);
+            nodes.filter(n => n.type === 'LAMP_RED').forEach(l => l.energized = wires.some(w => w.fromNode === l.id || w.toNode === l.id) && (!powerActive || olrTripped));
             const anyMot = nodes.some(n => n.running);
-            nodes.filter(n => n.type === 'MULTIMETER').forEach(mm => mm.reading = anyMot ? '20.12 A' : '0.00 A');
-            nodes.filter(n => n.type === 'AMMETER').forEach(am => am.ampVal = anyMot ? '20.1 A' : '0.0 A');
+            const currentAmps = anyMot ? +(19.8 + (Math.random() * 0.8)).toFixed(2) : 0;
+            scopeHistory.push(currentAmps);
+            if (scopeHistory.length > 40) scopeHistory.shift();
+
+            nodes.filter(n => n.type === 'MULTIMETER').forEach(mm => mm.reading = anyMot ? `${currentAmps.toFixed(2)} A` : '0.00 A');
+            nodes.filter(n => n.type === 'AMMETER').forEach(am => am.ampVal = anyMot ? `${currentAmps.toFixed(1)} A` : '0.0 A');
             wires.forEach(w => w.live = powerActive || w.color === '#ef4444');
             
             if (!activePressedButtonId) renderAllNodes();
             else drawWires();
             
-            // التحقق من نجاح التحدي إذا كان مفعلاً
             if (activeChallengeGoal && anyMot && !wires.some(w => w.shorted)) {
                 const chBox = document.getElementById('challengeStatusBanner');
                 if (chBox) chBox.innerHTML = `<span style="color:#10b981;font-weight:900;">🎉 أحسنت! تم إصلاح العطل وتشغيل المنظومة بنجاح!</span>`;
             }
 
+            if (activeDock === 'scope') renderScopeDock();
             if (activeDock === 'process') renderProcessTank();
             if (activeDock === 'plc') renderPlcLadder();
         }
 
         /* =========================================================
-           6. BOTTOM DOCKS (AI TROUBLESHOOTER, CHALLENGES, PDF BOM)
+           6. BOTTOM DOCKS (AI, SCOPE, CHALLENGES, IN-APP PDF BOM)
            ========================================================= */
         let activeDock = null;
         function openDock(tab) {
@@ -1165,6 +1248,7 @@
             document.querySelectorAll('.dock-trigger').forEach(b => b.classList.remove('active'));
             const t = document.getElementById('trig-' + tab); if (t) t.classList.add('active');
             if (tab === 'ai') renderAiBuilderDock();
+            if (tab === 'scope') renderScopeDock();
             if (tab === 'challenges') renderChallengesDock();
             if (tab === 'process') renderProcessTank();
             if (tab === 'plc') renderPlcLadder();
@@ -1173,7 +1257,30 @@
         }
         function closeDock() { activeDock = null; document.getElementById('bottomDock').classList.remove('open'); document.querySelectorAll('.dock-trigger').forEach(b => b.classList.remove('active')); }
 
-        /* --- تحديات اكتشاف الأعطال --- */
+        /* --- Feature 2: Live Oscilloscope --- */
+        function renderScopeDock() {
+            document.getElementById('dockTitle').textContent = 'راسم الإشارة الحي (Oscilloscope & Telemetry)';
+            const latestAmp = scopeHistory[scopeHistory.length - 1] || 0;
+            const pts = scopeHistory.map((v, i) => `${i * 15},${110 - (v * 3.8)}`).join(' ');
+            document.getElementById('dockBody').innerHTML = `
+                <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                    <div style="flex:1;min-width:260px;background:#020617;border:1px solid #1e293b;border-radius:10px;padding:10px;">
+                        <svg width="100%" height="130" viewBox="0 0 585 130" preserveAspectRatio="none" style="direction:ltr;">
+                            <line x1="0" y1="30" x2="585" y2="30" stroke="#1e293b" stroke-dasharray="4 4"/>
+                            <line x1="0" y1="70" x2="585" y2="70" stroke="#1e293b" stroke-dasharray="4 4"/>
+                            <line x1="0" y1="110" x2="585" y2="110" stroke="#334155"/>
+                            <polyline fill="none" stroke="#10b981" stroke-width="2.5" points="${pts}"/>
+                        </svg>
+                    </div>
+                    <div style="min-width:190px;background:#0b0e14;border:1px solid #263042;border-radius:10px;padding:10px;font-size:0.78rem;line-height:1.8;">
+                        <div>• <strong>تيار الحمل (CH1):</strong> <span style="color:#10b981;font-weight:900;">${latestAmp.toFixed(2)} A</span></div>
+                        <div>• <strong>جهد الشبكة (CH2):</strong> <span style="color:#38bdf8;font-weight:900;">${isRunning ? '398 V AC' : '0 V'}</span></div>
+                        <div>• <strong>التردد (FREQ):</strong> <span style="color:#facc15;font-weight:900;">50.0 Hz</span></div>
+                        <div>• <strong>معامل القدرة:</strong> <span style="color:#c084fc;font-weight:900;">0.86 cosφ</span></div>
+                    </div>
+                </div>`;
+        }
+
         function renderChallengesDock() {
             document.getElementById('dockTitle').textContent = 'تحديات المهندسين: اكتشف العطل وأصلحه';
             document.getElementById('dockBody').innerHTML = `
@@ -1181,14 +1288,14 @@
                 <div class="challenge-card">
                     <div>
                         <strong style="color:#38bdf8;">التحدي 1: المحرك لا يعمل عند الضغط على Start (-S1)</strong><br>
-                        <small style="color:#9ca3af;">المستوى: مبتدئ | تلميح: تفقد خط النيوترال (A2) للكونتاكتور أو سلك التشغيل.</small>
+                        <small style="color:#9ca3af;">المستوى: مبتدئ | تلميح: تفقد خط النيوترال (A2) للكونتاكتور.</small>
                     </div>
                     <button class="t-btn run-active" onclick="loadChallenge(1)">ابدأ التحدي</button>
                 </div>
                 <div class="challenge-card">
                     <div>
                         <strong style="color:#f59e0b;">التحدي 2: شورت سيركت يفصل القاطع فوراً!</strong><br>
-                        <small style="color:#9ca3af;">المستوى: متوسط | تلميح: أحد الأسلاك يربط الفاز مع البارد بشكل خاطئ، احذفه وأعد التوصيل.</small>
+                        <small style="color:#9ca3af;">المستوى: متوسط | تلميح: احذف سلك الشورت الوامض وأعد التشغيل.</small>
                     </div>
                     <button class="t-btn run-active" onclick="loadChallenge(2)">ابدأ التحدي</button>
                 </div>
@@ -1204,7 +1311,6 @@
                 connectPorts(mcb.id, '2', km.id, 'L1', '#ef4444'); connectPorts(mcb.id, '4', km.id, 'L2', '#eab308'); connectPorts(mcb.id, '6', km.id, 'L3', '#3b82f6');
                 connectPorts(km.id, 'T1', mot.id, 'U1', '#ef4444'); connectPorts(km.id, 'T2', mot.id, 'V1', '#eab308'); connectPorts(km.id, 'T3', mot.id, 'W1', '#3b82f6');
                 connectPorts(mcb.id, '2', startB.id, '3', '#ef4444'); connectPorts(startB.id, '4', km.id, 'A1', '#ef4444');
-                // العطل المخفي: سلك البارد A2 غير موصول!
                 document.getElementById('challengeStatusBanner').innerHTML = `<span style="color:#38bdf8;">التحدي 1 جاهز! الكونتاكتور ما يلقط لأن طرف الملف <strong>A2</strong> ناقصه سلك البارد من القاطع <strong>N2</strong>. وصّله وجرب!</span>`;
             } else if (num === 2) {
                 const sup = spawnComponent('SUPPLY_3P', 50, 60, '-G1'), mcb = spawnComponent('MCB_3P', 50, 190, '-Q1'), km = spawnComponent('KM_3P_38A', 50, 320, '-KM1'), mot = spawnComponent('MOTOR_SD', 60, 450, '-M1'), startB = spawnComponent('BTN_START', 210, 260, '-S1');
@@ -1212,7 +1318,6 @@
                 connectPorts(mcb.id, '2', km.id, 'L1', '#ef4444'); connectPorts(mcb.id, '4', km.id, 'L2', '#eab308'); connectPorts(mcb.id, '6', km.id, 'L3', '#3b82f6');
                 connectPorts(km.id, 'T1', mot.id, 'U1', '#ef4444'); connectPorts(km.id, 'T2', mot.id, 'V1', '#eab308'); connectPorts(km.id, 'T3', mot.id, 'W1', '#3b82f6');
                 connectPorts(mcb.id, '2', startB.id, '3', '#ef4444'); connectPorts(startB.id, '4', km.id, 'A1', '#ef4444'); connectPorts(mcb.id, 'N2', km.id, 'A2', '#38bdf8');
-                // العطل المخفي: سلك شورت بين L1 و N
                 connectPorts(sup.id, 'L1', sup.id, 'N', '#ef4444');
                 document.getElementById('challengeStatusBanner').innerHTML = `<span style="color:#ef4444;">التحدي 2 جاهز! اكو سلك شورت يربط L1 مع N. اضغط على السلك الوامض لحذفه ثم اضغط تشغيل!</span>`;
                 runFaultDiagnostics();
@@ -1220,7 +1325,6 @@
             setTimeout(fitToScreen, 60);
         }
 
-        /* --- جدول الكميات وتصدير PDF / طباعة هندسية --- */
         function renderBomDock() {
             document.getElementById('dockTitle').textContent = 'جدول الكميات وحساب مقاطع الأسلاك وتصدير PDF';
             const counts = {};
@@ -1230,7 +1334,7 @@
             const powerCable = has95 ? '16mm² - 25mm² (قدرة عالية)' : '4mm² - 6mm² (محركات قياسية)';
             document.getElementById('dockBody').innerHTML = `
                 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-                    <button class="t-btn run-active" onclick="exportEngineeringSheet()">طباعة / حفظ المخطط PDF</button>
+                    <button class="t-btn run-active" onclick="exportEngineeringSheet()">طباعة / حفظ التقرير PDF</button>
                     <button class="t-btn" onclick="exportProjectJson()">تصدير المشروع (JSON)</button>
                     <button class="t-btn" onclick="importProjectJson()">استيراد مشروع (JSON)</button>
                 </div>
@@ -1242,6 +1346,7 @@
                 <table class="bom-table"><thead><tr><th>اسم القطعة الصناعية</th><th>الكمية</th></tr></thead><tbody>${rows}</tbody></table>`;
         }
 
+        /* --- Feature 5: In-App Print & Engineering Report Sheet --- */
         function exportEngineeringSheet() {
             const counts = {};
             nodes.forEach(n => { const d = getCompDef(n.type); const lbl = d ? d.label : n.type; counts[lbl] = (counts[lbl] || 0) + 1; });
@@ -1250,20 +1355,21 @@
                 const fn = nodes.find(x => x.id === w.fromNode), tn = nodes.find(x => x.id === w.toNode);
                 return `<tr><td>W${idx + 1}</td><td>${fn ? fn.tag : ''} [${w.fromPort}]</td><td>${tn ? tn.tag : ''} [${w.toPort}]</td></tr>`;
             }).join('');
-            const win = window.open('', '_blank');
-            if (!win) { alert('يرجى السماح بالنوافذ المنبثقة (Pop-ups) لفتح ورقة الطباعة.'); return; }
-            win.document.write(`
-                <html lang="ar" dir="rtl"><head><title>تقرير المخطط الهندسي - VoltAI Pro</title>
-                <style>body{font-family:Arial,sans-serif;padding:20px;color:#111}table{width:100%;border-collapse:collapse;margin-bottom:20px}th,td{border:1px solid #333;padding:8px;text-align:right}th{background:#f1f5f9}.hdr{border-bottom:2px solid #0f172a;padding-bottom:10px;margin-bottom:20px;display:flex;justify-content:space-between}</style>
-                </head><body>
-                <div class="hdr"><div><h2>مخطط لوحة السيطرة والقدرة - VoltAI Studio Pro</h2><p>تاريخ الإصدار: ${new Date().toLocaleDateString('ar-IQ')}</p></div><div><strong>عدد العناصر: ${nodes.length}</strong><br><strong>عدد الأسلاك: ${wires.length}</strong></div></div>
-                <h3>1. جدول الكميات والمعدات (Bill of Materials)</h3>
-                <table><thead><tr><th>ت</th><th>اسم المعدة / العنصر الصناعي</th><th>الكمية</th></tr></thead><tbody>${rowsHtml || '<tr><td colspan="3">لا توجد عناصر</td></tr>'}</tbody></table>
-                <h3>2. جدول توصيلات الأسلاك (Wiring Schedule)</h3>
-                <table><thead><tr><th>رقم السلك</th><th>من النقطة (From)</th><th>إلى النقطة (To)</th></tr></thead><tbody>${wiresHtml || '<tr><td colspan="3">لا توجد أسلاك</td></tr>'}</tbody></table>
-                <script>window.onload=function(){window.print();}<\/script></body></html>
-            `);
-            win.document.close();
+            const modal = document.getElementById('printModal');
+            document.getElementById('printSheetContent').innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0f172a;padding-bottom:10px;margin-bottom:15px;">
+                    <div><h2 style="font-size:1.1rem;">تقرير لوحة السيطرة والقدرة - VoltAI Pro</h2><p style="font-size:0.8rem;color:#475569;">التاريخ: ${new Date().toLocaleDateString('ar-IQ')}</p></div>
+                    <div class="no-print" style="display:flex;gap:6px;">
+                        <button class="t-btn run-active" onclick="window.print()">طباعة / حفظ PDF</button>
+                        <button class="t-btn" onclick="document.getElementById('printModal').classList.remove('open')">إغلاق</button>
+                    </div>
+                </div>
+                <h4 style="margin-bottom:6px;">1. جدول الكميات والمعدات (BOM)</h4>
+                <table><thead><tr><th>ت</th><th>اسم المعدة</th><th>الكمية</th></tr></thead><tbody>${rowsHtml || '<tr><td colspan="3">لا توجد عناصر</td></tr>'}</tbody></table>
+                <h4 style="margin-bottom:6px;">2. جدول توصيلات الأسلاك (Wiring Schedule)</h4>
+                <table><thead><tr><th>رقم السلك</th><th>من النقطة</th><th>إلى النقطة</th></tr></thead><tbody>${wiresHtml || '<tr><td colspan="3">لا توجد أسلاك</td></tr>'}</tbody></table>
+            `;
+            modal.classList.add('open');
         }
 
         function exportProjectJson() {
@@ -1301,7 +1407,6 @@
             document.getElementById('dockBody').innerHTML = `<textarea id="arduinoEditor" rows="7" style="width:100%;background:#0b0e14;color:#38bdf8;border:1px solid #242c3a;border-radius:8px;padding:10px;font-family:monospace;direction:ltr;text-align:left;font-size:0.79rem;">${arduinoCode}</textarea><button class="t-btn run-active" style="margin-top:6px;" onclick="arduinoCode=document.getElementById('arduinoEditor').value;toggleSimulation();">رفع الكود وتشغيل المحاكاة</button>`;
         }
 
-        /* --- الذكاء الاصطناعي: بناء الدوائر + فحص وتدقيق الدائرة الحالية --- */
         function renderAiBuilderDock() {
             document.getElementById('dockTitle').textContent = 'المهندس الذكي (بناء الدوائر + فحص الأعطال الذكي)';
             document.getElementById('dockBody').innerHTML = `
@@ -1344,7 +1449,7 @@
                 if (motorWires < 3) report.push(`⚠️ <strong>المحرك (${m.tag}):</strong> موصول بـ (${motorWires}) أسلاك فقط! المحرك الثلاثي يحتاج 3 أطوار (U1, V1, W1).`);
             });
 
-            if (wires.length === 0) report.push('⚠️ <strong>لا توجد أسلاك:</strong> قمت بوضع العناصر لكن لم توصلها ببعضها بعد. انقر على أي برغي ثم البرغي المقابل لتوصيل سلك.');
+            if (wires.length === 0) report.push('⚠️ <strong>لا توجد أسلاك:</strong> اضغط على زر <strong>توصيل تلقائي</strong> في الأعلى أو صل البراغي يدوياً.');
 
             if (report.length === 0) {
                 box.innerHTML = `<strong style="color:#10b981;">✅ تقرير الفحص الذكي ممتاز:</strong> جميع العناصر الأساسية ومصادر التغذية وملفات الكونتاكتورات موصولة بشكل سليم. اضغط على زر <strong>تشغيل</strong> في الأعلى لتجربة الدائرة!`;
@@ -1395,15 +1500,18 @@
                 guideHtml = `<strong style="color:#f59e0b;">دائرة ستار / دلتا:</strong> اضغط <strong>-S1</strong> للبدء بوضع <strong>STAR Y</strong> ثم التحول إلى <strong>DELTA Δ</strong>.`;
             } else if (key === 'rev_motor') {
                 const sup = spawnComponent('SUPPLY_3P', 50, 60, '-G1'), mcb = spawnComponent('MCB_3P', 50, 190, '-Q1'), km1 = spawnComponent('KM_3P_38A', 50, 320, '-KM1'), km2 = spawnComponent('KM_3P_38A', 195, 320, '-KM2'), s1 = spawnComponent('BTN_START', 195, 180, '-S1'), s2 = spawnComponent('BTN_START', 320, 180, '-S2'), mot = spawnComponent('MOTOR_SD', 125, 450, '-M1');
-                connectPorts(sup.id, 'L1', mcb.id, '1', '#ef4444'); connectPorts(sup.id, 'L2', mcb.id, '3', '#eab308'); connectPorts(sup.id, 'L3', mcb.id, '5', '#3b82f6');
+                connectPorts(sup.id, 'L1', mcb.id, '1', '#ef4444'); connectPorts(sup.id, 'L2', mcb.id, '3', '#eab308'); connectPorts(sup.id, 'L3', mcb.id, '5', '#3b82f6'); connectPorts(sup.id, 'N', mcb.id, 'N1', '#38bdf8');
                 connectPorts(mcb.id, '2', km1.id, 'L1', '#ef4444'); connectPorts(mcb.id, '4', km1.id, 'L2', '#eab308'); connectPorts(mcb.id, '6', km1.id, 'L3', '#3b82f6');
+                connectPorts(mcb.id, '2', km2.id, 'L3', '#ef4444'); connectPorts(mcb.id, '4', km2.id, 'L2', '#eab308'); connectPorts(mcb.id, '6', km2.id, 'L1', '#3b82f6');
                 connectPorts(km1.id, 'T1', mot.id, 'U1', '#ef4444'); connectPorts(km1.id, 'T2', mot.id, 'V1', '#eab308'); connectPorts(km1.id, 'T3', mot.id, 'W1', '#3b82f6');
-                connectPorts(s1.id, '4', km1.id, 'A1', '#10b981'); connectPorts(s2.id, '4', km2.id, 'A1', '#f59e0b');
-                guideHtml = `<strong style="color:#38bdf8;">عكس حركة محرك 3 فاز:</strong> اضغط <strong>-S1</strong> لليمين أو <strong>-S2</strong> لليسار.`;
+                connectPorts(km2.id, 'T1', mot.id, 'U1', '#3b82f6'); connectPorts(km2.id, 'T2', mot.id, 'V1', '#eab308'); connectPorts(km2.id, 'T3', mot.id, 'W1', '#ef4444');
+                connectPorts(s1.id, '4', km1.id, 'A1', '#10b981'); connectPorts(mcb.id, 'N2', km1.id, 'A2', '#38bdf8');
+                connectPorts(s2.id, '4', km2.id, 'A1', '#f59e0b'); connectPorts(mcb.id, 'N2', km2.id, 'A2', '#38bdf8');
+                guideHtml = `<strong style="color:#38bdf8;">عكس حركة محرك 3 فاز:</strong> اضغط <strong>-S1</strong> للدوران يميناً أو <strong>-S2</strong> لعكس الطورين والدوران يساراً.`;
             } else if (key === 'plc_tank') {
                 const s1 = spawnComponent('BTN_START', 35, 50, '-S1'), s0 = spawnComponent('BTN_STOP', 145, 50, '-S0'), lt = spawnComponent('TX_LEVEL_420', 260, 42, '-LT1'), plc = spawnComponent('PLC_14IO', 110, 190, '-KF1'), rly = spawnComponent('RELAY_2CO', 55, 320, '-K1'), pump = spawnComponent('PUMP_1P', 225, 330, '-P1');
                 connectPorts(s1.id, '4', plc.id, 'I0.0', '#10b981'); connectPorts(s0.id, '2', plc.id, 'I0.1', '#ef4444'); connectPorts(lt.id, 'OUT', plc.id, 'IW64', '#06b6d4');
-                connectPorts(plc.id, 'Q0.0', rly.id, 'A1', '#eab308'); connectPorts(plc.id, '0V', rly.id, 'A2', '#38bdf8'); connectPorts(rly.id, '14', pump.id, 'L', '#f59e0b'); connectPorts(plc.id, '0V', pump.id, 'N', '#38bdf8');
+                connectPorts(plc.id, 'Q0.0', rly.id, 'A1', '#eab308'); connectPorts(plc.id, '0V', rly.id, 'A2', '#38bdf8'); connectPorts(rly.id, '14', pump.id, 'L', '#f59e0b'); connectPorts(rly.id, '0V', pump.id, 'N', '#38bdf8');
                 guideHtml = `<strong style="color:#38bdf8;">منظومة MINI PLC (-KF1):</strong> اضغط <strong>-S1</strong> للتشغيل، أو المس الحساس <strong>-LT1</strong> لضبط المنسوب.`;
             } else if (key === 'arduino_pt100') {
                 const ard = spawnComponent('ARDUINO_UNO', 110, 55, '-A1'), tt1 = spawnComponent('TX_TEMP', 120, 195, '-TT1'), lcd = spawnComponent('LCD_I2C', 265, 65, '-LCD1'), rel = spawnComponent('RELAY_5V', 55, 345, '-K1'), srv = spawnComponent('SERVO_MOTOR', 225, 345, '-SRV1');
